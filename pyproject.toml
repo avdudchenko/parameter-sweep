@@ -15,7 +15,7 @@ dependencies = [
     "h5py",
     "pyyaml",
     # both idaes-pse and watertap should be removed from core dependencies ASAP
-    "idaes-pse",  # idaes.core.solvers.get_solver(), idaes.core.surrogate.pysmo.sampling
+   # "idaes-pse",  # idaes.core.solvers.get_solver(), idaes.core.surrogate.pysmo.sampling
 ]
 [project.optional-dependencies]
 ray = [
@@ -26,8 +26,8 @@ mpi = [
 ]
 testing = [
     "pytest >= 8",
-    "idaes-pse",  # for IDAES solvers
-    "watertap",   # loop_tool tests
+    #"idaes-pse",  # for IDAES solvers
+    #"watertap",   # loop_tool tests
     "requests",  # for src/parameter_sweep/tests/test_parameter_sweep.py
 ]
 [tool.setuptools_scm]

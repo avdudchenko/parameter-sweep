@@ -735,11 +735,13 @@ class _ParameterSweepBase(ABC):
 
         # build and init model, we also pass first set of paramters incase user wants
         # to update them before initlizeing the model
+        print("-----------in sweep loop--------------------")
         if (
             self.config.initialize_before_sweep
             or self.model_manager.is_initialized == False
         ):
             if self.model_manager._is_rebuild_and_init_enabled:
+                print("-----------build_and_init--------------------")
                 self.model_manager.build_and_init(
                     sweep_params=sweep_params, local_value_k=local_values[0, :]
                 )
@@ -842,14 +844,16 @@ class ParameterSweep(_ParameterSweepBase, _ParameterSweepParallelUtils):
         self.config.build_model_kwargs = build_model_kwargs
         self.config.build_sweep_params_kwargs = build_sweep_params_kwargs
         # create the list of all combinations - needed for some aspects of scattering
+        print("-----------build first time--------------------")
         model = build_model(**build_model_kwargs)
         sweep_params = build_sweep_params(model, **build_sweep_params_kwargs)
+        print("-----------intializes--------------------")
         sweep_params, sampling_type = self._process_sweep_params(sweep_params)
         np.random.seed(seed)
         all_parameter_combinations = self._build_combinations(
             sweep_params, sampling_type, num_samples
         )
-
+        print("-----------scatter--------------------")
         all_results = self.run_scatter_gather(
             all_parameter_combinations, ParameterSweep
         )
