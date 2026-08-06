@@ -209,16 +209,23 @@ class loopTool:
             for value in self.execution_list:
                 self.execute_param_sweep_run(value)
         else:
-            chunk_size=1
-            if len(self.execution_list)//self.num_loop_workers > 10 and self.chunk_size is None:
-                chunk_size = max(1, len(self.execution_list) // self.num_loop_workers - 10)
+            chunk_size = 1
+            if (
+                len(self.execution_list) // self.num_loop_workers > 10
+                and self.chunk_size is None
+            ):
+                chunk_size = max(
+                    1, len(self.execution_list) // self.num_loop_workers - 10
+                )
             else:
-                chunk_size=self.chunk_size
+                chunk_size = self.chunk_size
             with ProcessPoolExecutor(max_workers=self.num_loop_workers) as executor:
                 [
                     r
                     for r in executor.map(
-                        self.execute_param_sweep_run, self.execution_list, chunksize=chunk_size
+                        self.execute_param_sweep_run,
+                        self.execution_list,
+                        chunksize=chunk_size,
                     )
                 ]
 
